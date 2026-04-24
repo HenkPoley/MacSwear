@@ -56,7 +56,7 @@ class game
 	virtual void draw();
 	virtual bool over();
 
-	void game::calc_camera(vector pos,vector dir,vector normal);
+	void calc_camera(vector pos,vector dir,vector normal);
 
 	int camera_mode,camera_inertia,tracking_angle;
 

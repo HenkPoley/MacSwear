@@ -576,33 +576,28 @@
 {
 	unsigned short keycode=[event keyCode];
 
-	KeyboardLayoutRef layout;
-	const void *uchr,*kchr;
-	KLGetCurrentKeyboardLayout(&layout);
-	KLGetKeyboardLayoutProperty(layout,kKLuchrData,&uchr);
-	KLGetKeyboardLayoutProperty(layout,kKLuchrData,&kchr);
-
-	if(uchr)
+	TISInputSourceRef source=TISCopyCurrentKeyboardLayoutInputSource();
+	if(source)
 	{
-		UInt32 state=0;
-		UniCharCount strlen;
-		UniChar c;
+		CFDataRef data=TISGetInputSourceProperty(source,kTISPropertyUnicodeKeyLayoutData);
+		if(data)
+		{
+			const UCKeyboardLayout *layout=(const UCKeyboardLayout *)CFDataGetBytePtr(data);
+			UInt32 state=0;
+			UniCharCount length=0;
+			UniChar chars[4];
 
-		UCKeyTranslate(uchr,keycode,kUCKeyActionDown,0,LMGetKbdType(),0,&state,1,&strlen,&c);
-		if(state!=0) UCKeyTranslate(uchr,keycode,kUCKeyActionDown,0,LMGetKbdType(),0,&state,1,&strlen,&c);
+			OSStatus status=UCKeyTranslate(layout,keycode,kUCKeyActionDown,0,LMGetKbdType(),
+			kUCKeyTranslateNoDeadKeysMask,&state,4,&length,chars);
 
-		if(!strlen||c<32||c==127) return [event charactersIgnoringModifiers]; // control chars are not reliable!
-		return [NSString stringWithCharacters:&c length:strlen];
+			CFRelease(source);
+
+			if(status==noErr&&length&&chars[0]>=32&&chars[0]!=127)
+			return [NSString stringWithCharacters:chars length:length];
+		}
+		else CFRelease(source);
 	}
-	else if(kchr)
-	{
-		char c[2]={0,0};
-		UInt32 state=0;
-		c[0]=KeyTranslate(kchr,keycode,&state)&0xff;
-		if(state!=0) c[0]=KeyTranslate(kchr,keycode,&state)&0xff;
 
-		return [NSString stringWithCString:c encoding:NSMacOSRomanStringEncoding];
-	}
 	return [event charactersIgnoringModifiers];
 }
 
@@ -919,8 +914,7 @@
 	dropbefore=nil;
 	dropsize=NSZeroSize;
 
-//	[[NSCursor disappearingItemCursor] set];
-	SetThemeCursor(kThemePoofCursor);
+	[[NSCursor disappearingItemCursor] set];
 	[self reloadData];
 }
 
@@ -1100,8 +1094,8 @@ static XeeKeyboardShortcuts *globalshortcuts;
 
 +(void)installForShortcuts:(XeeKeyboardShortcuts *)shortcuts
 {
+	[globalshortcuts autorelease];
 	globalshortcuts=[shortcuts retain];
-	[self poseAsClass:[NSWindow class]];
 }
 
 @end

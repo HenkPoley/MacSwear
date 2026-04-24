@@ -77,7 +77,7 @@ class skittler
 	void live(double dt,playfield *p);
 	void draw(vector view);
 	void die();
-	bool skittler::collide(const vector &other,const vector &other_normal);
+	bool collide(const vector &other,const vector &other_normal);
 
 	worm *w;
 

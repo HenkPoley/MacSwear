@@ -86,8 +86,6 @@ void starfield::draw(vector campos)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 
-	glLockArraysEXT(0,num);
-
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glTranslatef(campos.x,campos.y,campos.z);
@@ -96,8 +94,6 @@ void starfield::draw(vector campos)
 	glDrawArrays(type,0,numelem);
 
 	glPopMatrix();
-
-	glUnlockArraysEXT();
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
@@ -171,9 +167,7 @@ void lineparticles::draw(vector view)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 
-	glLockArraysEXT(0,num_lines*2);
 	glDrawArrays(GL_LINES,0,num_lines*2);
-	glUnlockArraysEXT();
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);

@@ -135,12 +135,8 @@ void playfield::draw(vector view,double brightness)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 
-	glLockArraysEXT(0,num_vertices);
-
 	if(num_lines) glDrawElements(GL_LINES,num_lines*2,GL_UNSIGNED_INT,lines);
 	glDrawArrays(GL_POINTS,0,num_vertices);
-
-	glUnlockArraysEXT();
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);

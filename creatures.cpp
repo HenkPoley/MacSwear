@@ -343,7 +343,7 @@ skittler::~skittler()
 #define VEL_MIN 0.3
 #define VEL_MAX 0.75
 #define SIZE_MIN 0.025
-#define SIZE_MAX 0.05
+#define SKITTLER_SIZE_MAX 0.05
 #define TURN_MIN 0.5
 #define TURN_MAX 2.5
 #define SPEED_OFFSET 1.3
@@ -354,7 +354,7 @@ void skittler::place(playfield *p)
 
 	double r1=drand(),r2=drand(),r3=drand();
 	vel=r1*r1*(VEL_MAX-VEL_MIN)+VEL_MIN;
-	size=r2*(SIZE_MAX-SIZE_MIN)+SIZE_MIN;
+	size=r2*(SKITTLER_SIZE_MAX-SIZE_MIN)+SIZE_MIN;
 	turn=r3*r3*(TURN_MAX-TURN_MIN)+TURN_MIN;
 
 	points=int(100*(r1+0.6)/(r2+1.1)*(r3+0.6)/1.6*1.1/1.6);

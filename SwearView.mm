@@ -15,6 +15,15 @@
 #import "effects.h"
 
 
+#ifndef MACSWEAR_RETINA_OPENGL_VIEWPORT
+#if defined(MAC_OS_X_VERSION_10_7) && MAC_OS_X_VERSION_MAX_ALLOWED>=MAC_OS_X_VERSION_10_7
+#define MACSWEAR_RETINA_OPENGL_VIEWPORT 1
+#else
+#define MACSWEAR_RETINA_OPENGL_VIEWPORT 0
+#endif
+#endif
+
+
 @implementation SwearView
 
 -(id)initWithFrame:(NSRect)frameRect
@@ -41,7 +50,7 @@
 
 		[[self openGLContext] makeCurrentContext];
 
-		long val=1;
+		GLint val=1;
 		[[self openGLContext] setValues:&val forParameter:NSOpenGLCPSwapInterval];
 	}
 
@@ -77,8 +86,14 @@
 {
 	[[self openGLContext] makeCurrentContext];
 
+#if MACSWEAR_RETINA_OPENGL_VIEWPORT
+	NSSize viewsize=[self respondsToSelector:@selector(convertRectToBacking:)]?[self convertRectToBacking:[self bounds]].size:[self bounds].size;
+#else
 	NSSize viewsize=[self bounds].size;
-	glViewport(0,0,(int)viewsize.width,(int)viewsize.height);
+#endif
+	if(viewsize.width<=0||viewsize.height<=0) return;
+
+	glViewport(0,0,(GLsizei)viewsize.width,(GLsizei)viewsize.height);
 
 	glClearColor(0,0,0,1);
 	glClear(GL_COLOR_BUFFER_BIT);
