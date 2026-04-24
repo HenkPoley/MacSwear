@@ -1,0 +1,84 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {findNext = id; findPrevious = id; }; 
+            CLASS = KFTypeSelectTableView; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSTableView; 
+        }, 
+        {
+            ACTIONS = {
+                startBlindGame = id; 
+                startHuntGame = id; 
+                startNormalGame = id; 
+                switchHighScore = id; 
+            }; 
+            CLASS = SwearController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                gamepopup = NSPopUpButton; 
+                highscoretable = SwearHighScoreView; 
+                highscorewindow = NSWindow; 
+                levelmenu = NSMenu; 
+                levelpopup = NSPopUpButton; 
+                shortcuts = XeeKeyboardShortcuts; 
+                view = SwearView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = SwearHighScoreView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {
+            CLASS = SwearHighScores; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                gamewindow = NSWindow; 
+                highscoretable = SwearHighScoreView; 
+                highscorewindow = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = SwearLevel; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = SwearStatusView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {prefsUpdated = id; }; 
+            CLASS = SwearView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                highscores = SwearHighScores; 
+                shortcuts = XeeKeyboardShortcuts; 
+                status = SwearStatusView; 
+            }; 
+            SUPERCLASS = NSOpenGLView; 
+        }, 
+        {
+            CLASS = XeeAction; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {target = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = XeeKeyListenerWindow; LANGUAGE = ObjC; SUPERCLASS = NSWindow; }, 
+        {CLASS = XeeKeyStroke; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                addShortcut = id; 
+                draggingExited = id; 
+                removeShortcut = id; 
+                resetAll = id; 
+                resetToDefaults = id; 
+            }; 
+            CLASS = XeeKeyboardList; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                addButton = NSControl; 
+                infoTextField = NSTextField; 
+                keyboardShortcuts = XeeKeyboardShortcuts; 
+                removeButton = NSControl; 
+                resetButton = NSControl; 
+            }; 
+            SUPERCLASS = KFTypeSelectTableView; 
+        }, 
+        {CLASS = XeeKeyboardShortcuts; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
